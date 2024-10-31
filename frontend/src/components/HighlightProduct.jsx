@@ -13,8 +13,12 @@ import valentineCake from '../assets/images/valentine_cake.jpg';
 import whiteCake from '../assets/images/white_cake.jpg';
 
 
+
+
 // Passing props to ProductCard
 const ProductCard = ({ image, price, title, description }) => (
+
+ 
 
   // Product Card
   <div className="w-64 bg-white shadow-lg rounded-lg overflow-hidden">
@@ -28,7 +32,7 @@ const ProductCard = ({ image, price, title, description }) => (
       <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-sm text-gray-500">{description}</p>
       <button className="mt-4 w-full bg-rose-400 text-white font-semibold py-2 rounded-lg hover:bg-rose-600">
-        Add to bag
+        <a href="/login">Add to Bag</a>
       </button>
     </div>
   </div>
