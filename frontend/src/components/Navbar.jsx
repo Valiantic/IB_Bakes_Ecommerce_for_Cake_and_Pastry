@@ -11,21 +11,25 @@ const Nav = () => {
           <span className="sr-only">Home</span>
             <img className="h-20" src={logo} alt="Logo" />
         </a>
+        <a className="block" href="#">
+          <span className="sr-only">Home</span>
+          <h1 className="flex hidden md:block font-sans md:font-serif text-2xl">IB <span className="font-style: italic">Bakes</span></h1>
+        </a>
       </div>
 
       <div className="hidden md:block">
-        <nav aria-label="Global">
+        <nav>
           <ul className="flex items-center gap-20 text-2xl">
             <li>
-              <a className="text-gray-700 transition hover:text-gray-500/75" href="#about"> About </a>
+              <a className="text-gray-700 font-sans md:font-serif transition hover:text-gray-500/75" href="#about"> About </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-500/75" href="#products"> Products </a>
+              <a className="text-gray-700  font-sans md:font-serif transition hover:text-gray-500/75" href="#products"> Products </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-500/75" href="#contacts"> Contacts </a>
+              <a className="text-gray-700 font-sans md:font-serif transition hover:text-gray-500/75" href="#contacts"> Contacts </a>
             </li>
 
          
