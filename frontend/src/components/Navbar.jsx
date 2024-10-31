@@ -1,18 +1,22 @@
 
 import logo from "../assets/icons/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
+
+  const navigate = useNavigate();
+
   return (
 
     <header className="bg-white">
   <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
     <div className="flex h-16 items-center justify-between">
       <div className="md:flex md:items-center md:gap-12">
-        <a className="block text-teal-600" href="#">
+        <a className="block text-teal-600" href="/">
           <span className="sr-only">Home</span>
             <img className="h-20" src={logo} alt="Logo" />
         </a>
-        <a className="block" href="#">
+        <a className="block" href="/">
           <span className="sr-only">Home</span>
           <h1 className="flex hidden md:block font-sans md:font-serif text-2xl">IB <span className="font-style: italic text-rose-600">Bakes</span></h1>
         </a>
@@ -42,7 +46,7 @@ const Nav = () => {
         <div className="sm:flex sm:gap-4">
           <a
             className="rounded-md bg-rose-600 px-5 py-2.5 text-sm font-medium text-white shadow"
-            href="#"
+          onClick={() => navigate('/login')}
           >
             Login
           </a>

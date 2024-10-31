@@ -1,10 +1,9 @@
 
-import './App.css'
-import './index.css'
+
 import Home from './pages/Home'
 import ErrorPage from './pages/ErrorPage';
+import Login from './pages/Login';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-
 
 function App() {
 
@@ -12,8 +11,11 @@ function App() {
     <>
     <Router>
       <Routes>
+
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Home />} />
       <Route path="*" element={<ErrorPage />} />
+
       </Routes>
     </Router>
     </>
