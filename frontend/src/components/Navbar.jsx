@@ -3,6 +3,7 @@ import logo from "../assets/icons/logo.png";
 
 const Nav = () => {
   return (
+
     <header className="bg-white">
   <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
     <div className="flex h-16 items-center justify-between">
@@ -13,7 +14,7 @@ const Nav = () => {
         </a>
         <a className="block" href="#">
           <span className="sr-only">Home</span>
-          <h1 className="flex hidden md:block font-sans md:font-serif text-2xl">IB <span className="font-style: italic">Bakes</span></h1>
+          <h1 className="flex hidden md:block font-sans md:font-serif text-2xl">IB <span className="font-style: italic text-rose-600">Bakes</span></h1>
         </a>
       </div>
 
@@ -21,15 +22,15 @@ const Nav = () => {
         <nav>
           <ul className="flex items-center gap-20 text-2xl">
             <li>
-              <a className="text-gray-700 font-sans md:font-serif transition hover:text-gray-500/75" href="#about"> About </a>
+              <a className="text-gray-700 font-sans md:font-serif transition hover:text-rose-500/75" href="#about"> Products </a>
             </li>
 
             <li>
-              <a className="text-gray-700  font-sans md:font-serif transition hover:text-gray-500/75" href="#products"> Products </a>
+              <a className="text-gray-700  font-sans md:font-serif transition hover:text-rose-500/75" href="#products"> About </a>
             </li>
 
             <li>
-              <a className="text-gray-700 font-sans md:font-serif transition hover:text-gray-500/75" href="#contacts"> Contacts </a>
+              <a className="text-gray-700 font-sans md:font-serif transition hover:text-rose-500/75" href="#contacts"> Contacts </a>
             </li>
 
          
@@ -74,6 +75,7 @@ const Nav = () => {
     </div>
   </div>
 </header>
+
   );
 };
 
