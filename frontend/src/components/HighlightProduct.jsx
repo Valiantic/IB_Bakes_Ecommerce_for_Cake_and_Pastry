@@ -53,7 +53,7 @@ const HiglightProduct = () => {
   }, []);
 
   return (
-    <div data-aos="fade-up" className="max-w-screen-lg mx-auto p-6">
+    <div id="products" data-aos="fade-up" className="max-w-screen-lg mx-auto p-6">
       <h2 className="text-4xl font-montserrat font-bold mb-4 mt-7 text-rose-600">Checkout our Best Sellers!</h2>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((product, index) => (

@@ -22,11 +22,11 @@ const Nav = () => {
         <nav>
           <ul className="flex items-center gap-20 text-2xl">
             <li>
-              <a className="text-gray-700 font-sans md:font-serif transition hover:text-rose-500/75" href="#about"> Products </a>
+              <a className="text-gray-700 font-sans md:font-serif transition hover:text-rose-500/75" href="#products"> Products </a>
             </li>
 
             <li>
-              <a className="text-gray-700  font-sans md:font-serif transition hover:text-rose-500/75" href="#products"> About </a>
+              <a className="text-gray-700  font-sans md:font-serif transition hover:text-rose-500/75" href="#about"> About </a>
             </li>
 
             <li>
