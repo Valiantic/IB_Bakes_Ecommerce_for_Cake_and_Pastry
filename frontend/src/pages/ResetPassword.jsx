@@ -11,6 +11,13 @@ const ResetPassword = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+  // FOR PASSWORD TOGGLE
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  }
+
    // Function to validate password format
  const validatePassword = (newPassword) => {
   const regex = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/; // Must contain at least one capital letter, one number, and be 8+ characters
@@ -50,12 +57,12 @@ const ResetPassword = () => {
         <p className="text-center text-gray-600">Kindly input your new password!</p>
         
         <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+        <div className="relative w-full max-w-md">
             <label className="block text-left text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -63,6 +70,18 @@ const ResetPassword = () => {
               className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
               required
             />
+
+            {/* TOGGLE SHOW PASSWORD */}
+
+            <button
+          type="button"
+          onClick={handlePasswordToggle}
+          className="absolute inset-y-0 right-3 pt-7 flex items-center text-gray-600 hover:text-rose-800"
+        >
+          <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+        </button>     
+
+
           </div>
 
           <button
