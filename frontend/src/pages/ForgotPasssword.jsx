@@ -2,13 +2,32 @@ import React, { useState } from 'react';
 import '../App.css';
 import '../index.css';
 import Logo from '../assets/icons/logo.png';
+import axios from 'axios';
 
-function ForgotPassword() {
+
+const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  // State Message to display while sending
+  const [isSending, setIsSending] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle ForgotPassword logic here
+    
+    setIsSending(true);
+    setMessage('Just a moment we are sending the reset link.')
+
+    try {
+      const response = await axios.post('http://localhost:5000/forgot-password', { email });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage(error.response.data.error);
+    }
+    finally {
+      // Reset the sending state when the request is complete
+      setIsSending(false); 
+    }
   };
 
   return (
@@ -40,13 +59,14 @@ function ForgotPassword() {
 
 
           <button
-            type="submit"
+            type="submit" disabled={isSending}
             className="w-full py-2 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-300"
           >
-            Send Reset Link
+          {isSending ? 'Hang on we are sending your Reset Link ^_^' : 'Send Reset Link'}
           </button>
         </form>
 
+        {message && <p>{message}</p>}
 
 
       </div>

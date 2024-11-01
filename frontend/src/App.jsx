@@ -22,14 +22,17 @@ function App() {
     <Router>
       <Routes>
 
+       {/* PRIVATE ROUTES */}
       <Route path="/admin" element={<PrivateRoute><AdminDashboard/></PrivateRoute>} />
       <Route path="/customer" element={<PrivateRoute><CustomerDashboard/></PrivateRoute>} />
       
+      {/* AUTHENTICATION ROUTES */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
       <Route path="/forgot-password" element={<ForgotPasssword />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
+            
       <Route path="/" element={<Home />} />
       <Route path="*" element={<ErrorPage />} />
 
