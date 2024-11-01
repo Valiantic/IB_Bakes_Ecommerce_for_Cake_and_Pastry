@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ForgotPasssword from './pages/ForgotPasssword';
 import ResetPassword from './pages/ResetPassword';
+import AdminDashboard from './pages/AdminDashboard';
+import CustomerDashboard from './pages/CustomerDashboard';
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
@@ -16,8 +18,12 @@ function App() {
     <Router>
       <Routes>
 
+      <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/customer" element={<CustomerDashboard />} />
+      
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+
       <Route path="/forgot-password" element={<ForgotPasssword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/" element={<Home />} />

@@ -4,6 +4,7 @@ import '../index.css';
 import Logo from '../assets/icons/logo.png';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Signup = () => {
   const [full_name, setFullname] = useState('');
@@ -16,6 +17,14 @@ const Signup = () => {
    // FOR BLANK FIELD DETECTOR
    const [error, setError] = useState(''); // For error message
    const [success, setSuccess] = useState(''); // For success message
+
+   // FOR PASSWORD TOGGLE
+   const [showPassword, setShowPassword] = useState(false);
+
+   const handlePasswordToggle = () => {
+     setShowPassword(!showPassword);
+   };
+ 
  
  
    const navigate = useNavigate();
@@ -86,7 +95,7 @@ const Signup = () => {
 
 
       // Set the success message upon successful signup
-      setSuccess('Account Created! Taking you to Login...');
+      setSuccess('Account Created!');
     
       // Redirect after a delay to the customer page (replace '/customer' with the correct route)
       setTimeout(() => {
@@ -192,28 +201,45 @@ const Signup = () => {
             />
           </div>
 
-          <div>
+          <div className="relative w-full max-w-md">
             <label className="block text-left text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
+
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="********"
               className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
-              required
+              required           
             />
+
+      <button
+          type="button"
+          onClick={handlePasswordToggle}
+          className="absolute inset-y-0 right-3 pt-7 flex items-center text-gray-600 hover:text-rose-800"
+        >
+          <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+        </button>     
+
+
+
           </div>
 
+              
 
 
             {/* Display success message */}
-            {success && <p style={{ color: 'green' }}>{success}</p>}
+            {success && (
+            <p style={{ color: '#ff69b4', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}>
+                {success}
+              </p>
+            )}
 
             {/* Display error message */}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p style={{ color: 'red', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}>{error}</p>}
 
 
 
@@ -232,7 +258,9 @@ const Signup = () => {
             Login
           </a>
         </div>
+
       </div>
+      
     </div>
   );
 }
