@@ -2,17 +2,102 @@ import React, { useState } from 'react';
 import '../App.css';
 import '../index.css';
 import Logo from '../assets/icons/logo.png';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-function Signup() {
-  const [fullname, setFullname] = useState('');
+const Signup = () => {
+  const [full_name, setFullname] = useState('');
   const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phone_number, setPhone] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+   // FOR BLANK FIELD DETECTOR
+   const [error, setError] = useState(''); // For error message
+   const [success, setSuccess] = useState(''); // For success message
+ 
+ 
+   const navigate = useNavigate();
+ 
+   const validateEmail = (email) => {
+     // Basic email validation regex
+     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+     return re.test(email);
+   };
+   
+   const validatePassword = (password) => {
+     const regex = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/; // Must contain at least one capital letter, one number, and be 8+ characters
+     return regex.test(password);
+   };
+ 
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle Signup logic here
+    if (!username) {
+      setError('Username is required!');
+      return;
+    }
+    if (!email) {
+      setError('Email is required!');
+      return;
+    }
+    if (!password) {
+      setError('Password is required!');
+      return;
+    }
+    if (!full_name) {
+      setError('Full Name is required!');
+      return;
+    }
+    if (!address) {
+      setError('Address is required!');
+      return;
+    }
+    if (!phone_number) {
+      setError('Phone Number is required!');
+      return;
+    }
+
+    if(!validateEmail(email)) {
+      setError('Invalid email!');
+      return;
+    }
+    if(!validatePassword(password)) {
+      setError('Password must be at least 8 characters long and contain at least one number and one uppercase letter!');
+      return;
+    }
+  
+
+    setError(''); // Reset error message
+    setSuccess(''); // Reset success message
+
+
+
+    try {
+      await axios.post('http://localhost:5000/signup', {
+        username,
+        email,
+        password,
+        full_name,
+        address,
+        phone_number
+      });
+
+
+      // Set the success message upon successful signup
+      setSuccess('Account Created! Taking you to Login...');
+    
+      // Redirect after a delay to the customer page (replace '/customer' with the correct route)
+      setTimeout(() => {
+        navigate('/customer');
+      }, 2000); // Adjust the delay as necessary
+
+
+    } catch (error) {
+          setError(error.response?.data?.error || 'Signup failed');
+
+    }
   };
 
   return (
@@ -38,8 +123,8 @@ function Signup() {
             </label>
             <input
               type="text"
-              id="fullname"
-              value={fullname}
+              id="full_name"
+              value={full_name}
               onChange={(e) => setFullname(e.target.value)}
               placeholder="Juan Dela Cruz"
               className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
@@ -67,10 +152,25 @@ function Signup() {
               Phone Number
             </label>
             <input
-              type="tel"
-              id="phone"
-              value={phone}
+              type="number"
+              id="phone_number"
+              value={phone_number}
               onChange={(e) => setPhone(e.target.value)}
+              placeholder="123-456-7890"
+              className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-left text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="123-456-7890"
               className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
               required
@@ -106,6 +206,17 @@ function Signup() {
               required
             />
           </div>
+
+
+
+            {/* Display success message */}
+            {success && <p style={{ color: 'green' }}>{success}</p>}
+
+            {/* Display error message */}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+
+
+
 
           <button
             type="submit"
