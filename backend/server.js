@@ -64,7 +64,51 @@ app.post('/signup', async (req, res) => {
 });
 
 
+// Login Route
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
 
+  const query = 'SELECT * FROM tbl_users WHERE email = ?';
+  db.query(query, [email], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Server error' });
+
+    if (result.length === 0) {
+      return res.status(400).json({ error: 'User not found' });
+    }
+
+    const user = result[0];
+
+    // Compare password
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) return res.status(500).json({ error: 'Server error' });
+
+      if (!isMatch) return res.status(400).json({ error: 'Invalid password' });
+
+      // Create session
+      req.session.userId = user.id;
+      req.session.username = user.username;
+
+
+      // Display username
+      if (user.username === 'Admin') {
+        return res.json({ message: 'Welcome back Admin!', username: user.username, redirectUrl: '/admin' });
+      } else {
+        return res.json({ message: 'Login successful!', username: user.username, redirectUrl: '/customer' });
+      }
+
+    });
+  });
+});
+
+// Logout Route
+app.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.json({ message: 'Logged out' });
+});
+
+
+
+// Server Start
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });

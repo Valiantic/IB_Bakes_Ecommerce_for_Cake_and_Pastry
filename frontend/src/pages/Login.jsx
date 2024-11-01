@@ -1,16 +1,81 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import '../index.css';
 import Logo from '../assets/icons/logo.png';
+import {useAuth} from '../authentication/AuthContext';
 
-function Login() {
+
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const [message, setMessage] = useState('');
+
+
+  const { login } = useAuth(); // Get login function from AuthContext
+
+
+  const navigate = useNavigate(); // navigate function from react-router-dom
+
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+
+  
+    // blank field detector
+    if(!email) {
+      setMessage('Email is required!');
+      return;
+    }
+    if(!password) {
+      setMessage('Password is required!');
+      return;
+    }
+    if(!email || !password) {
+      setMessage('Please input all fields!');
+      return;
+    }
+    
+
+
+    try {
+      const response = await axios.post('http://localhost:5000/login', {
+        email,
+        password
+      });
+
+      setMessage(response.data.message); // Set success message
+      login({ username: response.data.username }); // Store user data in context
+
+      // REDIRECT AFTER A BRIEF DELAY
+      setTimeout(() => {
+        navigate(response.data.redirectUrl); // Redirect to admin or customer page
+      }, 500);
+
+    } catch (error) {
+      // alert(error.response.data.error || 'Login failed');
+
+      if (error.response) {
+        // Check for specific error messages
+        if (error.response.status === 401) {
+            setMessage('Incorrect email or password'); // Generic message for invalid credentials
+        } 
+        else {
+            setMessage('Incorrect email or password');
+        }
+        
+    } else {
+        setMessage('An error occurred. Please try again.');
+    }
+
+    // Automatically clear the message after 3 seconds
+    setTimeout(() => setMessage(''), 3000);
+    }
   };
+
 
   return (
     <div className="flex justify-center items-center h-screen bg-pink-50">
@@ -54,6 +119,16 @@ function Login() {
             />
           </div>
 
+
+           {/* DISPLAY STATUS MESSAGE */}
+          {message && (
+                <p style={{ color: '#ff69b4', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}>
+                    {message}
+
+                </p>
+            )}
+
+      
           <button
             type="submit"
             className="w-full py-2 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-300"

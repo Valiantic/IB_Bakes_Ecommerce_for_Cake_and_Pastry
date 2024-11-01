@@ -11,15 +11,19 @@ import CustomerDashboard from './pages/CustomerDashboard';
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
+import { AuthProvider } from './authentication/AuthContext';
+import PrivateRoute from './authentication/PrivateRoute';
+
 function App() {
 
   return (
     <>
+    <AuthProvider>
     <Router>
       <Routes>
 
-      <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/customer" element={<CustomerDashboard />} />
+      <Route path="/admin" element={<PrivateRoute><AdminDashboard/></PrivateRoute>} />
+      <Route path="/customer" element={<PrivateRoute><CustomerDashboard/></PrivateRoute>} />
       
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
@@ -31,6 +35,7 @@ function App() {
 
       </Routes>
     </Router>
+    </AuthProvider>
     </>
   )
 }
